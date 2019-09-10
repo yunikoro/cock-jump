@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- 清除缓存 -->
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate">
+    <meta http-equiv="expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui,viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <!-- 灰色半透明 -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
+  <body>
+      <div class="wrapper">
+          <div class="orientationWrapper">
+              Please turn your device in landscape mode
+          </div>
+  
+  
+          <div class="contentWrapper">
+              <div class="title">First Game</div>
+  
+              <div class="subtitle top">Collect as many gifts as you can !</div>
+              <div class="play">play</div>
+              <div class="play playRipple"></div>
+              <div class="subtitle bottom">
+                  Play with arrow keys to move left or right
+                  <br/>Space to jump
+              </div>
+  
+              <div class="author">
+                  Made with <i class="fa fa-heart"></i> by <a href="http://twitter.com/Temechon">Julian</a>, (3D assets by <a href="http://twitter.com/jbledowski">JB</a> and Sarah)<br/>
+                  Powered by <a class="red" href="http://www.babylonjs.com">Babylon.js</a>
+              </div>
+  
+          </div>
+      </div>
+      <div class="ready">
+          打空格开始
+      </div>
+  
+      <div class="score">
+          0
+      </div>
+    <canvas class="view" id="c"></canvas>
+    <!-- built files will be auto injected -->
+  </body>
+</html>
