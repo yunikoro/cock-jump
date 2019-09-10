@@ -1,0 +1,12 @@
+body {
+    height: 100vh;
+    display: flex;
+    background-color: rgb(209, 209, 209);
+    margin: 0;
+}
+.view {
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+}
