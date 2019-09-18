@@ -36,7 +36,7 @@ module.exports = {
                 ],
             },
             {
-                test: /\.(mp4|eot|svg|ttf|woff|woff2|json|png|jpeg|jpg|gltf|bin|babylon|fbx)$/,
+                test: /\.(mp4|eot|svg|ttf|woff|woff2|json|png|jpeg|jpg|gltf|bin|babylon|fbx|glb)$/,
                 use: [
                   {
                     loader: 'file-loader',

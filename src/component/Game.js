@@ -1,5 +1,7 @@
 import * as BABYLON from 'babylonjs'
 import AxesHelper from '../helper/AxesHelper'
+import JumpAssetsManager from './JumpAssetsManager'
+import 'babylonjs-loaders'
 
 // const canvas = document.querySelector('#c')
 
@@ -25,6 +27,8 @@ export default class Game {
         new AxesHelper('helper', {
             size: 3
         }, this.scene)
+        const jumpAssetsManager = new JumpAssetsManager(this.scene)
+        jumpAssetsManager.load()
     }
     run() {
         this.engine.runRenderLoop(() => {
