@@ -58,7 +58,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-          title: 'Runner',
+          title: 'Cock Jump',
           filename: 'index.html',
           template: 'index.html',
           chunks: ['index'],

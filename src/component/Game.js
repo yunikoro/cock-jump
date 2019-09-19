@@ -3,6 +3,8 @@ import AxesHelper from '../helper/AxesHelper'
 import JumpAssetsManager from './JumpAssetsManager'
 import 'babylonjs-loaders'
 
+import skyPic from '../assets/sky.jpg'
+
 // const canvas = document.querySelector('#c')
 
 export default class Game {
@@ -17,7 +19,7 @@ export default class Game {
             this.engine.resize()
         }
     }
-    init() {
+    async init() {
         const alpha = 3 * Math.PI / 2
         const beta = 11 * Math.PI / 20
         const radius = 15
@@ -27,8 +29,18 @@ export default class Game {
         new AxesHelper('helper', {
             size: 3
         }, this.scene)
-        const jumpAssetsManager = new JumpAssetsManager(this.scene)
-        jumpAssetsManager.load()
+        
+        const isBackground = true
+        const sky = new BABYLON.Layer('sky', skyPic, this.scene, isBackground)
+        try {
+            const jumpAssetsManager = new JumpAssetsManager(this.scene)
+            const { assets } = await jumpAssetsManager.load()
+        } catch (e) {
+            throw e
+        }
+        
+
+        
     }
     run() {
         this.engine.runRenderLoop(() => {
