@@ -1,5 +1,6 @@
 import * as BABYLON from 'babylonjs'
 import 'babylonjs-loaders'
+import PanAxesUpdater from './PanAxesUpdater'
 
 import AxesHelper from '../helper/AxesHelper'
 import JumpAssetsManager from './JumpAssetsManager'
@@ -28,7 +29,7 @@ export default class Game {
         const beta = 11 * Math.PI / 20
         const radius = 15
         this.mainCamera = new BABYLON.ArcRotateCamera('main_camera', alpha, beta, radius, new BABYLON.Vector3(1, 6, -2), this.scene)
-        this.mainCamera.attachControl(this.canvas, true)
+        // this.mainCamera.attachControl(this.canvas, true)
         this.mainLight = new BABYLON.HemisphericLight('main_Light', new BABYLON.Vector3(0, 2, 0), this.scene)
         new AxesHelper('helper', {
             size: 3
@@ -45,7 +46,13 @@ export default class Game {
                 asset: this.assets.cock
             }, this.scene)
             this.cock.init()
-            this.cock.dead()
+            this.cock.jump()
+
+            this.panAxes = new PanAxesUpdater(this.canvas)
+            this.panAxes.updater(glAxes => {
+                console.log(glAxes)
+            })
+            
         } catch (e) {
             throw e
         }
