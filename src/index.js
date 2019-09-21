@@ -9,5 +9,9 @@ const canvas = document.querySelector('#c')
 const game = new Game({
     canvas
 })
-game.init()
-game.run()
+try {
+    game.init()
+    game.run()
+} catch (e) {
+    throw e
+}
