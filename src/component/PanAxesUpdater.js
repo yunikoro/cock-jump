@@ -34,13 +34,26 @@ export default class PanAxesUpdater {
     }
     updater(cb = () => {}) {
         this.hammer = new Hammer(this.htmlDom)
-        this.hammer.on('pan', evt => {
-            // console.log(evt.center)
+        this.hammer.on('panstart', evt => {
             this.cssAxesCaler(evt.center)
             // console.log(this.cssAxes)
             this.cssRateAxes = this.cssAxes.divide(this.fullCssAxes)
+            this.currRateAxes = this.cssRateAxes
+        })
+        this.hammer.on('pan', evt => {
+            console.log(evt)
+            
+            this.cssAxesCaler(evt.center)
+            // console.log(this.cssAxes)
+            this.cssRateAxes = this.cssAxes.divide(this.fullCssAxes)
+            if (evt.eventType == 4) {
+                this.currRateAxes = this.cssRateAxes
+            }
             // console.log(this.cssRateAxes)
             const acce = this.acceCaler()
+            if (evt.eventType == 4) {
+                
+            }
             cb(acce)
         })
     }

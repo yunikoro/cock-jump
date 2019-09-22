@@ -23,6 +23,8 @@ export default class Game {
             this.engine.resize()
         }
         this.assets = null
+
+        this.cockAcce = new BABYLON.Vector2.Zero()
     }
     async init() {
         const alpha = 3 * Math.PI / 2
@@ -50,9 +52,14 @@ export default class Game {
 
             this.panAxes = new PanAxesUpdater(this.canvas)
             this.panAxes.updater(glAxes => {
-                console.log(glAxes)
+                // console.log(glAxes)
+                this.cockAcce = glAxes
+                this.cock.position.x += this.cockAcce.x * 8
+                // this.cock.position.y += this.cockAcce.y * 8
             })
-            
+            this.scene.onBeforeRenderObservable.add(() => {
+                
+            })
         } catch (e) {
             throw e
         }
