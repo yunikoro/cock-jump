@@ -9,9 +9,13 @@ const canvas = document.querySelector('#c')
 const game = new Game({
     canvas
 })
-try {
-    game.init()
-    game.run()
-} catch (e) {
-    throw e
+const main = async () => {
+    try {
+        await game.init()
+        game.run()
+    } catch (e) {
+        throw e
+    }
+    
 }
+main()

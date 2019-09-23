@@ -41,6 +41,9 @@ export default class JumpAssetsManager extends BABYLON.AssetsManager {
             loadedMeshes.forEach(mesh =>{
                 mesh.parent = floor
             })
+            for (let i = 0; i < loadedMeshes.length; i++) {
+                loadedMeshes[i].parent = floor
+            }
             floor.rotation.y = - Math.PI / 2
             this.meshes['floor'] = {
                 mesh: floor,
