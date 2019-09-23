@@ -41,7 +41,7 @@ export default class PanAxesUpdater {
             this.currRateAxes = this.cssRateAxes
         })
         this.hammer.on('pan', evt => {
-            console.log(evt)
+            // console.log(evt)
             
             this.cssAxesCaler(evt.center)
             // console.log(this.cssAxes)
