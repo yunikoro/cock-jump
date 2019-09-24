@@ -5,6 +5,7 @@ import PanAxesUpdater from './PanAxesUpdater'
 import AxesHelper from '../helper/AxesHelper'
 import JumpAssetsManager from './JumpAssetsManager'
 import Cock from './Cock'
+import BarrierManager from './BarrierManager'
 import Stairs from './Stairs'
 
 import skyPic from '../assets/sky.jpg'
@@ -60,6 +61,10 @@ export default class Game {
             
             this.cock.init()
             this.cock.jump()
+
+            this.barrierManager = new BarrierManager('barrier_manager', {
+                game: this
+            }, this.scene)
 
             this.stairs = new Stairs('stairs', {
                 game: this,
