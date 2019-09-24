@@ -24,8 +24,7 @@ export default class JumpAssetsManager extends BABYLON.AssetsManager {
         const treeTask = this.addMeshTask('tree', '', '', treeGltf)
         treeTask.onSuccess = task => {
             const { loadedMeshes, loadedAnimationGroups, loadedSkeletons } = task
-            const cock = new BABYLON.AbstractMesh('cock', scene)
-            const tree = new BABYLON.AbstractMesh('tree', scene)
+            const tree = new BABYLON.Mesh('tree', scene)
             loadedMeshes.forEach(mesh => {
                 mesh.parent = tree
             })
@@ -37,7 +36,7 @@ export default class JumpAssetsManager extends BABYLON.AssetsManager {
         const floorTask = this.addMeshTask('floor', '', '', floorGltf)
         floorTask.onSuccess = task => {
             const { loadedMeshes, loadedAnimationGroups, loadedSkeletons } = task
-            const floor = new BABYLON.AbstractMesh('floor', scene)
+            const floor = new BABYLON.Mesh('floor', scene)
             loadedMeshes.forEach(mesh =>{
                 mesh.parent = floor
             })
