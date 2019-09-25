@@ -10,6 +10,7 @@ export default class BarrierManager {
     }
     plant(floorPos, axesX) {
         const tree = this.assets['tree'].mesh.clone()
+        tree.position.x = axesX
         tree.position.y = 2.0
         this.barrierList.push({
             tree,

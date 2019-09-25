@@ -1,7 +1,9 @@
 import * as BABYLON from 'babylonjs'
 import 'babylonjs-loaders'
-import PanAxesUpdater from './PanAxesUpdater'
 
+import { getRandomInt, arrPicker } from '../util'
+
+import PanAxesUpdater from './PanAxesUpdater'
 import AxesHelper from '../helper/AxesHelper'
 import JumpAssetsManager from './JumpAssetsManager'
 import Cock from './Cock'
@@ -70,6 +72,7 @@ export default class Game {
                 game: this,
             }, this.scene)
             this.stairs.init(10)
+            console.log(arrPicker([1,2,3,4,5,6,7,8,9,0], 6))
         } catch (e) {
             throw e
         }
@@ -83,7 +86,7 @@ export default class Game {
         //     // this.cock.position.y += this.cockAcce.y * 8
         // })
         this.scene.onBeforeRenderObservable.add(() => {
-            
+            // console.log(getRandomInt(0, 5))
         })
         this.engine.runRenderLoop(() => {
             this.scene.render()

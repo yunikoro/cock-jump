@@ -22,7 +22,7 @@ export default class Stairs {
             }, this.scene)
             floor.position.y += 2 * i
             floor.position.z += 3 * i
-            floor.loadBarrier()
+            floor.loadBarrier(i)
             if(i == 0) {
                 this.currFloorPos = {
                     position: floor.position,
