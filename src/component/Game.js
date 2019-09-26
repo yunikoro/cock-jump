@@ -72,12 +72,16 @@ export default class Game {
                 game: this,
             }, this.scene)
             this.stairs.init(10)
-            console.log(arrPicker([1,2,3,4,5,6,7,8,9,0], 6))
         } catch (e) {
             throw e
         }
     }
     run() {
+        for (let i = 0; i < 30; i++) {
+            this.stairs.ascent()
+            console.log(this.stairs.currFloorPos.position)
+            console.log(this.stairs.nextFloorPos.position)
+        }
         // this.panAxes = new PanAxesUpdater(this.canvas)
         // this.panAxes.updater(glAxes => {
         //     // console.log(glAxes)
