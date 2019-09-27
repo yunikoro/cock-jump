@@ -77,15 +77,14 @@ export default class Game {
                     start: this.stairs.currFloorPos.position,
                     end: this.stairs.nextFloorPos.position,
                     game: this
-                },
-                true)
+                })
 
         } catch (e) {
             throw e
         }
     }
     run() {
-        this.cock.idle()
+        // this.cock.jump()
         for (let i = 0; i < 2; i++) {
             this.stairs.ascent()
             this.jumpManager.updateStartEnd({
@@ -102,7 +101,19 @@ export default class Game {
             this.jumpManager.updatePosX(this.posX)
         })
         this.scene.onBeforeRenderObservable.add(() => {
-            // console.log(getRandomInt(0, 5))
+            this.jumpManager.startJumpLoop({
+                jumping: (position) => {
+                    this.cock.position = position
+                },
+                afterJump: () => {
+                    this.stairs.ascent()
+                    this.jumpManager.updateStartEnd({
+                        start: this.stairs.currFloorPos.position,
+                        end: this.stairs.nextFloorPos.position
+                    })
+                    this.jumpManager.updatePosX(this.posX)
+                }
+            })
         })
         this.engine.runRenderLoop(() => {
             this.scene.render()

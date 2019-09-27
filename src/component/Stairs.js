@@ -59,5 +59,5 @@ export default class Stairs {
                 index: 0,
             }
         }
-    } 
+    }
 } 

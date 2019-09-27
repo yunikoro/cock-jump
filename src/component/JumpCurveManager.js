@@ -11,7 +11,7 @@ export default class JumpCurveManager {
 
         this.start = _start
         this.end = _end 
-        this.pointNum = 60
+        this.pointNum = 30
         this.scene = game.scene
         this.showHelper = showHelper
         
@@ -19,6 +19,7 @@ export default class JumpCurveManager {
         this.center.y += 10
         this.helperMesh = null
         this.points = []
+        this.loopIndex = 0
 
         this.updateBase()
     }
@@ -53,8 +54,9 @@ export default class JumpCurveManager {
         this.updateBase()
     }
     updatePosX(posX) {
+        this.posX = posX
         this.points.forEach(point => {
-            point.x = posX
+            point.x = this.posX
         })
         if(this.showHelper) {
             if(this.helperMesh) {
@@ -63,35 +65,18 @@ export default class JumpCurveManager {
             this.helperMesh = BABYLON.Mesh.CreateLines('curve', this.points, this.scene)
         }
     }
-    update(resource) {
-        const { start, end, x } = resource
-        
-        const _start = start.clone()
-        const _end = end.clone()
-        _start.y += 2.1
-        _end.y += 2.1
-
-        this.start = _start
-        this.end = _end
-        this.center = BABYLON.Vector3.Center(start, end)
-        this.center.y += 10
-
-        const locatingPoints = BABYLON.Curve3.CreateQuadraticBezier(
-            this.start,
-            this.center,
-            this.end,
-            this.pointNum
-        )
-        this.points = locatingPoints.getPoints()
-        this.points.forEach(point => {
-            point.x = x
-        })
-        if(this.showHelper) {
-            if(this.helperMesh) {
-                this.helperMesh.dispose()
-            } 
-            this.helperMesh = BABYLON.Mesh.CreateLines('curve', this.points, this.scene)
+    startJumpLoop(jumpCb) {
+        const { preJump, jumping, afterJump } = jumpCb
+        if (typeof jumping === 'function') {
+            jumping(this.points[this.loopIndex])
         }
-
+        if (this.loopIndex == this.points.length - 1) {
+            if (typeof afterJump === 'function') {
+                afterJump(this.points[this.loopIndex])
+            }
+            this.loopIndex = 0
+        } else {
+            this.loopIndex++
+        }
     }
 }
