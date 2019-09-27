@@ -9,6 +9,7 @@ import JumpAssetsManager from './JumpAssetsManager'
 import Cock from './Cock'
 import BarrierManager from './BarrierManager'
 import Stairs from './Stairs'
+import JumpCurveManager from './JumpCurveManager'
 
 import skyPic from '../assets/sky.jpg'
 
@@ -29,20 +30,21 @@ export default class Game {
         this.assets = null
 
         this.cockAcce = new BABYLON.Vector2.Zero()
+        this.posX = 0
     }
     async init() {
-        // const alpha = 3 * Math.PI / 2
-        // const beta = 11 * Math.PI / 20
-        // const radius = 15
-        // this.mainCamera = new BABYLON.ArcRotateCamera('main_camera', alpha, beta, radius, new BABYLON.Vector3(0, 8, -15), this.scene)
+        const alpha = 3 * Math.PI / 2
+        const beta = 11 * Math.PI / 20
+        const radius = 15
+        this.mainCamera = new BABYLON.ArcRotateCamera('main_camera', alpha, beta, radius, new BABYLON.Vector3(0, 8, -15), this.scene)
 
         // for test
-        const camPos = new BABYLON.Vector3(0, 8, -8)
-        this.mainCamera = new BABYLON.UniversalCamera('camera', camPos, this.scene)
-        this.mainCamera.setTarget(new BABYLON.Vector3(0, 8, 0))
+        // const camPos = new BABYLON.Vector3(0, 8, -8)
+        // this.mainCamera = new BABYLON.UniversalCamera('camera', camPos, this.scene)
+        // this.mainCamera.setTarget(new BABYLON.Vector3(0, 8, 0))
         
 
-        this.mainCamera.attachControl(this.canvas, true)
+        // this.mainCamera.attachControl(this.canvas, true)
         this.mainLight = new BABYLON.HemisphericLight('main_Light', new BABYLON.Vector3(0, 2, 0), this.scene)
         new AxesHelper('helper', {
             size: 3
@@ -60,9 +62,7 @@ export default class Game {
                 asset: this.assets.cock
             }, this.scene)
             this.cock.position.y = 2.1
-            
             this.cock.init()
-            this.cock.jump()
 
             this.barrierManager = new BarrierManager('barrier_manager', {
                 game: this
@@ -72,23 +72,35 @@ export default class Game {
                 game: this,
             }, this.scene)
             this.stairs.init(10)
+            this.jumpManager = new JumpCurveManager(
+                {
+                    start: this.stairs.currFloorPos.position,
+                    end: this.stairs.nextFloorPos.position,
+                    game: this
+                },
+                true)
+
         } catch (e) {
             throw e
         }
     }
     run() {
-        for (let i = 0; i < 30; i++) {
+        this.cock.idle()
+        for (let i = 0; i < 2; i++) {
             this.stairs.ascent()
-            console.log(this.stairs.currFloorPos.position)
-            console.log(this.stairs.nextFloorPos.position)
+            this.jumpManager.updateStartEnd({
+                start: this.stairs.currFloorPos.position,
+                end: this.stairs.nextFloorPos.position
+            })
         }
-        // this.panAxes = new PanAxesUpdater(this.canvas)
-        // this.panAxes.updater(glAxes => {
-        //     // console.log(glAxes)
-        //     this.cockAcce = glAxes
-        //     this.cock.position.x += this.cockAcce.x * 8
-        //     // this.cock.position.y += this.cockAcce.y * 8
-        // })
+        this.panAxes = new PanAxesUpdater(this.canvas)
+        this.panAxes.updater(glAxes => {
+            // console.log(glAxes)
+            this.cockAcce = glAxes
+            this.posX += this.cockAcce.x * 8
+            // this.cock.position.y += this.cockAcce.y * 8
+            this.jumpManager.updatePosX(this.posX)
+        })
         this.scene.onBeforeRenderObservable.add(() => {
             // console.log(getRandomInt(0, 5))
         })
