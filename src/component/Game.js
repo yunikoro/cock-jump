@@ -37,6 +37,7 @@ export default class Game {
         const beta = 11 * Math.PI / 20
         const radius = 15
         this.mainCamera = new BABYLON.ArcRotateCamera('main_camera', alpha, beta, radius, new BABYLON.Vector3(0, 8, -15), this.scene)
+        this.mainCamera
 
         // for test
         // const camPos = new BABYLON.Vector3(0, 8, -8)
@@ -63,6 +64,7 @@ export default class Game {
             }, this.scene)
             this.cock.position.y = 2.1
             this.cock.init()
+            // this.mainCamera.lockedTarget = this.cock
 
             this.barrierManager = new BarrierManager('barrier_manager', {
                 game: this
@@ -78,7 +80,6 @@ export default class Game {
                     end: this.stairs.nextFloorPos.position,
                     game: this
                 })
-
         } catch (e) {
             throw e
         }
