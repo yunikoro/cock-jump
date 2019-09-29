@@ -26,7 +26,8 @@ export default class JumpCurveManager {
                             .divide(new BABYLON.Vector3(this.pointNum,
                                                         this.pointNum, 
                                                         this.pointNum))
-
+        console.log(this.end
+            .subtract(this.start).length())
         this.updateBase()
     }
     updateBase () {

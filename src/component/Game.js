@@ -116,6 +116,7 @@ export default class Game {
                 }
             })
             this.mainCamera.followLoop(this.jumpManager.avgSpeed)
+            this.stairs.rebuild()
         })
         this.engine.runRenderLoop(() => {
             this.scene.render()

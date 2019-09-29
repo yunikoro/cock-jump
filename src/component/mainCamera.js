@@ -9,8 +9,10 @@ export default class MainCamera extends BABYLON.ArcRotateCamera {
         const target = new BABYLON.Vector3(0, 14.1, 0.3)
         super(name, alpha, beta, radius, target, scene)
     }
-    followLoop(avgSpeed) {
-        this.target.y += avgSpeed.y
-        this.target.z += avgSpeed.z
+    // 30   balanceY = 0.0025, balanceZ = 0.0034
+    // 
+    followLoop(avgSpeed, balanceY = 0.0027, balanceZ = 0.0034) {
+        this.target.y += avgSpeed.y - balanceY
+        this.target.z += avgSpeed.z - balanceZ
     }
 }

@@ -38,7 +38,7 @@ export default class Stairs {
             }
             if (i == stepNum - 1) {
                 this.topFloorPos = {
-                    position: floor.position,
+                    position: floor.position.clone(),
                     index: i,
                 }
             }
@@ -59,5 +59,18 @@ export default class Stairs {
                 index: 0,
             }
         }
+    }
+    rebuild() {
+        this.stairs.forEach((floor, index) => {
+            if(floor.position.y - this.currFloorPos.position.y <= -6) {
+                this.topFloorPos.position.y += 2
+                this.topFloorPos.position.z += 3
+                floor.position = this.topFloorPos.position
+                this.topFloorPos = {
+                    position: floor.position.clone(),
+                    index
+                }
+            }
+        })
     }
 } 
