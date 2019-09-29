@@ -3,6 +3,7 @@ import 'babylonjs-loaders'
 
 import { getRandomInt, arrPicker } from '../util'
 
+import MainCamera from './MainCamera'
 import PanAxesUpdater from './PanAxesUpdater'
 import AxesHelper from '../helper/AxesHelper'
 import JumpAssetsManager from './JumpAssetsManager'
@@ -33,11 +34,7 @@ export default class Game {
         this.posX = 0
     }
     async init() {
-        const alpha = 3 * Math.PI / 2
-        const beta = 11 * Math.PI / 20
-        const radius = 15
-        this.mainCamera = new BABYLON.ArcRotateCamera('main_camera', alpha, beta, radius, new BABYLON.Vector3(0, 8, -15), this.scene)
-        this.mainCamera
+        this.mainCamera = new MainCamera(this.scene)
 
         // for test
         // const camPos = new BABYLON.Vector3(0, 8, -8)
@@ -103,6 +100,9 @@ export default class Game {
         })
         this.scene.onBeforeRenderObservable.add(() => {
             this.jumpManager.startJumpLoop({
+                preJump: () => {
+                    this.cock.jump()
+                },
                 jumping: (position) => {
                     this.cock.position = position
                 },
@@ -115,6 +115,7 @@ export default class Game {
                     this.jumpManager.updatePosX(this.posX)
                 }
             })
+            this.mainCamera.runLoop(this.jumpManager.avgSpeed)
         })
         this.engine.runRenderLoop(() => {
             this.scene.render()

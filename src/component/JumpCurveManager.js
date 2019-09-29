@@ -21,6 +21,12 @@ export default class JumpCurveManager {
         this.points = []
         this.loopIndex = 0
 
+        this.avgSpeed = this.end
+                            .subtract(this.start)
+                            .divide(new BABYLON.Vector3(this.pointNum,
+                                                        this.pointNum, 
+                                                        this.pointNum))
+
         this.updateBase()
     }
     updateBase () {
@@ -67,6 +73,11 @@ export default class JumpCurveManager {
     }
     startJumpLoop(jumpCb) {
         const { preJump, jumping, afterJump } = jumpCb
+        if (this.loopIndex == 0) {
+            if(typeof preJump == 'function') {
+                preJump()
+            }
+        }
         if (typeof jumping === 'function') {
             jumping(this.points[this.loopIndex])
         }
@@ -78,5 +89,10 @@ export default class JumpCurveManager {
         } else {
             this.loopIndex++
         }
+        this.avgSpeed = this.end
+                            .subtract(this.start)
+                            .divide(new BABYLON.Vector3(this.pointNum,
+                                                        this.pointNum, 
+                                                        this.pointNum))
     }
 }

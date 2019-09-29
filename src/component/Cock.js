@@ -27,7 +27,7 @@ export default class Cock extends BABYLON.AbstractMesh {
         this.animation.start(true, 1, 6.25 * 61/150, 6.25 * 90/150)
     }
     jump() {
-        this.animation.start(false, 1.25, 6.25 * 91/150, 6.25 * 120/150)
+        this.animation.start(false, 3, 6.25 * 91/150, 6.25 * 120/150)
     }
     dead() {
         this.animation.start(false, 1.25, 6.25 * 121/150, 6.25 * 150/150)
