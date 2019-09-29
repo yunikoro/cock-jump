@@ -115,7 +115,7 @@ export default class Game {
                     this.jumpManager.updatePosX(this.posX)
                 }
             })
-            this.mainCamera.runLoop(this.jumpManager.avgSpeed)
+            this.mainCamera.followLoop(this.jumpManager.avgSpeed)
         })
         this.engine.runRenderLoop(() => {
             this.scene.render()
