@@ -18,4 +18,7 @@ export default class BarrierManager {
         })
         return tree
     }
+    disposeLoop(currPos) {
+        
+    }
 }

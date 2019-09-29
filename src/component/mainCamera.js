@@ -15,4 +15,4 @@ export default class MainCamera extends BABYLON.ArcRotateCamera {
         this.target.y += avgSpeed.y - balanceY
         this.target.z += avgSpeed.z - balanceZ
     }
-}
+} 
