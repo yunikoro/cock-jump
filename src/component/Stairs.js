@@ -70,6 +70,7 @@ export default class Stairs {
                     position: floor.position.clone(),
                     index
                 }
+                floor.loadBarrier()
             }
         })
     }

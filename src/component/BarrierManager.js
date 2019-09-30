@@ -19,6 +19,12 @@ export default class BarrierManager {
         return tree
     }
     disposeLoop(currPos) {
-        
+        this.barrierList.forEach((barrier, index) => {
+            const { floorPos, tree } = barrier
+            if(floorPos.y - currPos.position.y <= -6) {
+                tree.dispose()
+                this.barrierList.splice(index, 1)
+            }
+        })
     }
 }

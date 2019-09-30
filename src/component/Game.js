@@ -113,10 +113,12 @@ export default class Game {
                         end: this.stairs.nextFloorPos.position
                     })
                     this.jumpManager.updatePosX(this.posX)
+                    this.mainCamera.targetRefresh(this.stairs.currFloorPos.position)
                 }
             })
             this.mainCamera.followLoop(this.jumpManager.avgSpeed)
             this.stairs.rebuild()
+            this.barrierManager.disposeLoop(this.stairs.currFloorPos)
         })
         this.engine.runRenderLoop(() => {
             this.scene.render()
