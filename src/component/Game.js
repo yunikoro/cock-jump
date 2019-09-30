@@ -25,6 +25,13 @@ export default class Game {
         this.canvas = canvas
         this.engine = new BABYLON.Engine(canvas, antialias, ngOptions, adaptDeviceRatio)
         this.scene = new BABYLON.Scene(this.engine)
+
+        this.scene.fogMode = BABYLON.Scene.FOGMODE_LINEAR
+        this.scene.fogStart = 39.0
+        this.scene.fogEnd = 50.0
+        this.scene.fogDensity = 0.1
+        this.scene.fogColor = BABYLON.Color3.FromHexString('#4675DD')
+
         window.onresize = () => {
             this.engine.resize()
         }
@@ -82,14 +89,6 @@ export default class Game {
         }
     }
     run() {
-        // this.cock.jump()
-        for (let i = 0; i < 2; i++) {
-            this.stairs.ascent()
-            this.jumpManager.updateStartEnd({
-                start: this.stairs.currFloorPos.position,
-                end: this.stairs.nextFloorPos.position
-            })
-        }
         this.panAxes = new PanAxesUpdater(this.canvas)
         this.panAxes.updater(glAxes => {
             // console.log(glAxes)

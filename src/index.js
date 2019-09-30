@@ -12,7 +12,9 @@ const game = new Game({
 const main = async () => {
     try {
         await game.init()
-        game.run()
+        setTimeout(() => {
+            game.run()
+        }, 2000)
     } catch (e) {
         throw e
     }
