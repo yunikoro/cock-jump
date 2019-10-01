@@ -40,6 +40,7 @@ export default class Game {
         this.cockAcce = new BABYLON.Vector2.Zero()
         this.posX = 0
         this.dead = false
+        this.started = false
     }
     async init() {
         this.mainCamera = new MainCamera(this.scene)
@@ -98,16 +99,16 @@ export default class Game {
             // this.cock.position.y += this.cockAcce.y * 8
             this.jumpManager.updatePosX(this.posX)
         })
-        this.scene.onBeforeRenderObservable.add(() => {
-            this.jumpManager.startJumpLoop({
-                preJump: () => {
-                    this.cock.jump()
-                },
-                jumping: (position) => {
-                    this.cock.position = position
-                },
-                afterJump: () => {
-                    if(!this.dead) {
+        if(this.started) {
+            this.scene.onBeforeRenderObservable.add(() => {
+                this.jumpManager.startJumpLoop({
+                    preJump: () => {
+                        this.cock.jump()
+                    },
+                    jumping: (position) => {
+                        this.cock.position = position
+                    },
+                    afterJump: () => {
                         this.stairs.ascent()
                         this.jumpManager.updateStartEnd({
                             start: this.stairs.currFloorPos.position,
@@ -116,16 +117,15 @@ export default class Game {
                         this.jumpManager.updatePosX(this.posX)
                         this.mainCamera.targetRefresh(this.stairs.currFloorPos.position)
                     }
-                    
-                }
-            })
-            this.mainCamera.followLoop(this.jumpManager.avgSpeed)
-            this.stairs.rebuild()
-            this.barrierManager.disposeLoop(this.stairs.currFloorPos)
-            this.cock.collideLoop(barrier => {
-                // this.dead = true
-            })
-        })
+                })
+                this.mainCamera.followLoop(this.jumpManager.avgSpeed)
+                this.stairs.rebuild()
+                this.barrierManager.disposeLoop(this.stairs.currFloorPos)
+                this.cock.collideLoop(barrier => {
+                    this.dead = true
+                })
+            })   
+        }
         this.engine.runRenderLoop(() => {
             this.scene.render()
         })
