@@ -13,6 +13,7 @@ export default class JumpAssetsManager extends BABYLON.AssetsManager {
             const cockAnim = loadedAnimationGroups[0]
             cockAnim.stop()
             loadedMeshes.forEach(mesh => {
+                mesh.checkCollisions = true
                 mesh.setEnabled(false)
             })
             // cockAnim.start(false, 1, 121/150*6.25, 150/150*6.25)
@@ -26,6 +27,7 @@ export default class JumpAssetsManager extends BABYLON.AssetsManager {
             const { loadedMeshes, loadedAnimationGroups, loadedSkeletons } = task
             const tree = new BABYLON.Mesh('tree', scene)
             loadedMeshes.forEach(mesh => {
+                mesh.checkCollisions = true
                 mesh.parent = tree
             })
             this.meshes['tree'] = {

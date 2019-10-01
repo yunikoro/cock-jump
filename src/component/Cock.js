@@ -5,6 +5,7 @@ export default class Cock extends BABYLON.AbstractMesh {
         super(name, scene)
         const { game, asset: { mesh, animation } } = resource
         this.game = game
+        this.barrierManager = this.game.barrierManager
         this.meshes = mesh
         this.animation = animation
         mesh.forEach(mesh => {
@@ -31,5 +32,25 @@ export default class Cock extends BABYLON.AbstractMesh {
     }
     dead() {
         this.animation.start(false, 1.25, 6.25 * 121/150, 6.25 * 150/150)
+    }
+    isCollidingWith(otherMeshes) {
+        const children = this.getChildren()
+        let isColliding = false
+        // console.log(children)
+        children.forEach(child => {
+            otherMeshes.getChildren().forEach(otherMesh => {
+                isColliding = child.intersectsMesh(otherMesh, true, true)
+            })
+        })
+        return isColliding
+    }
+    collideLoop(cb = () => {}) {
+        this.barrierManager.barrierList.forEach((barrier, index) => {
+            const { tree } = barrier
+            if (this.isCollidingWith(tree)) {
+                console.log('colliding')
+                cb(barrier)
+            }
+        })
     }
 }
