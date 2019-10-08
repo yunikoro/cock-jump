@@ -8,25 +8,38 @@ export default class PlayGround extends React.Component {
         super(props)
         this.canvasRef = React.createRef()
         this.game = null
+        this.state = {
+            showStart: false
+        }
     }
     componentDidMount() {
-        this.run(this.canvasRef.current)
+        this.init(this.canvasRef.current)
     }
-    async run(canvas) {
+    async init(canvas) {
         try {
-            console.log(canvas)
             this.game = new Game({
                 canvas
             })
             await this.game.init()
-            this.game.run()
+            this.setState({
+                showStart: true
+            })
         } catch (e) {
             throw e
         }
     }
+    start() {
+        this.setState({
+            showStart: false
+        })
+        this.game.run()
+    }
     render() {
         return (
-            <div>
+            <div className="ground">
+                {this.state.showStart && <div className="btn-box">
+                    <button className="start" onClick={this.start.bind(this)}>开始</button>
+                </div> }
                 <canvas className="view" ref={this.canvasRef} ></canvas>
             </div>
         )

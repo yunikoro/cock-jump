@@ -6,9 +6,9 @@ import Game from './component/Game'
 import './style/style.css'
 import VConsole from 'vconsole'
 
-import Test from './pages/Index.jsx'
+import Index from './pages/Index.jsx'
 
-const canvas = document.querySelector('#c')
+// const canvas = document.querySelector('#c')
 const body = document.querySelector('#root')
 // new VConsole()
 
@@ -24,6 +24,6 @@ const body = document.querySelector('#root')
 //     }
     
 // }
-
-ReactDOM.render(<Test />, body)
 // main()
+
+ReactDOM.render(<Index />, body)

@@ -40,7 +40,10 @@ export default class Game {
         this.cockAcce = new BABYLON.Vector2.Zero()
         this.posX = 0
         this.dead = false
-        this.started = false
+        this.started = true
+    }
+    static get EDAG() {
+        return 5
     }
     async init() {
         this.mainCamera = new MainCamera(this.scene)
@@ -86,6 +89,9 @@ export default class Game {
                     end: this.stairs.nextFloorPos.position,
                     game: this
                 })
+            this.engine.runRenderLoop(() => {
+                this.scene.render()
+            })
         } catch (e) {
             throw e
         }
@@ -95,7 +101,16 @@ export default class Game {
         this.panAxes.updater(glAxes => {
             // console.log(glAxes)
             this.cockAcce = glAxes
-            this.posX += this.cockAcce.x * 8
+            if(this.posX > 5.7 || this.posX < -5.7) {
+                this.posX += this.cockAcce.x * 8
+                if(this.posX > 0) {
+                    this.posX = 5.7
+                } else {
+                    this.posX = -5.7
+                }
+            } else {
+                this.posX += this.cockAcce.x * 8
+            }
             // this.cock.position.y += this.cockAcce.y * 8
             this.jumpManager.updatePosX(this.posX)
         })
@@ -126,8 +141,5 @@ export default class Game {
                 })
             })   
         }
-        this.engine.runRenderLoop(() => {
-            this.scene.render()
-        })
     }
 }

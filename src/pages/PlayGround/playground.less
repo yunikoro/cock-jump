@@ -1,3 +1,27 @@
+.ground {
+    height: 100vh;
+    .btn-box {
+        display: flex;
+        justify-content: center;
+        z-index: 2;
+        position: absolute;
+        margin-top: 45vh;
+        width: 100%;
+        .start {
+           outline: none;
+           background-color: #4477f2;
+           border: 0;
+           border-radius: 60px;
+           padding: 10px 90px;
+           color: #FFFFFF;
+           font-size: 32px;
+           &:active {
+            transform: translate(3px, 3px); /* no */
+            background-color: #4744f2;
+           }
+        }
+    }
+}
 .view {
     z-index: 1;
     width: 100vw;
