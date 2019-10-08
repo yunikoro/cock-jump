@@ -3,6 +3,9 @@
     background-image: url("../../assets/cock-mainbg.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .title {
         display: flex;
         justify-content: center;
@@ -11,5 +14,30 @@
         padding-top: 150px;
         font-family: "ali-light";
         text-shadow: 3px 4px rgba(0, 0, 0, 0.35); /* no */
+    }
+    .btn-box {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 250px;
+    }
+    .play-btn {
+        display: flex;
+        align-items: center;
+        font-family: "ali-blod";
+        background-color: #5a2421;
+        outline: none;
+        border: 5px solid #ffd35c; /* no */
+        padding: 20px; /* no */
+        border-radius: 3px; /* no */
+        color: #FFFFFF;
+        font-size: 85px;
+        img {
+            width: 90px;
+            height: 90px;
+        }
+        &:active {
+            transform: translate(3px, 3px); /* no */
+            border-color: #5a2421;
+        }
     }
 }

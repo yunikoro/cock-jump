@@ -13,10 +13,9 @@ export default class Index extends React.Component {
             <div className="title">
                 疯狂跳跳鸡
             </div>
-            <div>
-                <button className="play-btn">
-                    <img src={play} />
-                    玩一玩
+            <div className="btn-box">
+                <button onClick={this.props.playHandler} className="play-btn">
+                    <img src={play} /><span>玩一玩</span>
                 </button>
             </div>
         </div>)
