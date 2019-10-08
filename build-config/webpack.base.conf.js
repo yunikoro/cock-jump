@@ -2,6 +2,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const Px2remWebpackPlugin = require('px2rem-webpack-plugin')
 const CleanCSSPlugin = require('less-plugin-clean-css')
 
 function resolve (dir) {
@@ -84,6 +85,10 @@ module.exports = {
           template: 'index.html',
           chunks: ['index'],
           inject: true
-        })
+        }),
+        new Px2remWebpackPlugin({
+          originScreenWidth: 750,
+          maxWidth: 750
+        }),
     ]
 }

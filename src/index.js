@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom'
 import React from 'react'
 
 import Game from './component/Game'
-import './style.css'
+import './style/style.css'
 import VConsole from 'vconsole'
 
-import Test from './pages/Test.jsx'
+import Test from './pages/Index.jsx'
 
 const canvas = document.querySelector('#c')
 const body = document.querySelector('#root')
@@ -20,7 +20,7 @@ const body = document.querySelector('#root')
 //         await game.init()
 //         game.run()
 //     } catch (e) {
-//         throw e
+//         throw e  
 //     }
     
 // }

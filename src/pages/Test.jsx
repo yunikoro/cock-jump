@@ -9,7 +9,7 @@ export default class Test extends React.Component {
 
     render() {
         return (
-            <div className="leesBox">haha</div>
+            <div className="leesBox">黄知道</div>
         )
     }
 }
