@@ -1,6 +1,9 @@
 import React from 'react'
 import './playground.less'
 
+import decoL from '../../assets/deco-l.svg'
+import decoR from '../../assets/deco-r.svg'
+
 import Game from '../../component/Game'
 
 export default class PlayGround extends React.Component {
@@ -37,7 +40,14 @@ export default class PlayGround extends React.Component {
     render() {
         return (
             <div className="ground">
-                {this.state.showStart && <div className="btn-box">
+                { this.state.showStart && 
+                <div className="point-box">
+                    <img className="dec-base" src={decoL}></img>
+                    <div className="point">0</div>
+                    <img className="dec-base" src={decoR}></img>
+                </div> }
+                { this.state.showStart &&
+                <div className="btn-box">
                     <button className="start" onClick={this.start.bind(this)}>开始</button>
                 </div> }
                 <canvas className="view" ref={this.canvasRef} ></canvas>
