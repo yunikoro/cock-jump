@@ -41,6 +41,8 @@ export default class Game {
         this.posX = 0
         this.dead = false
         this.started = true
+
+        this.exposeHandler = () => {}
     }
     static get EDAG() {
         return 5
@@ -101,14 +103,14 @@ export default class Game {
         this.panAxes.updater(glAxes => {
             // console.log(glAxes)
             this.cockAcce = glAxes
-            if(this.posX > 5.7 || this.posX < -5.7) {
-                this.posX += this.cockAcce.x * 8
-                if(this.posX > 0) {
-                    this.posX = 5.7
-                } else {
-                    this.posX = -5.7
+            if(!this.dead) {
+                if(this.posX > 5.7 || this.posX < -5.7) {
+                    if(this.posX > 0) {
+                        this.posX = 5.7
+                    } else {
+                        this.posX = -5.7
+                    }
                 }
-            } else {
                 this.posX += this.cockAcce.x * 8
             }
             // this.cock.position.y += this.cockAcce.y * 8
@@ -116,30 +118,43 @@ export default class Game {
         })
         if(this.started) {
             this.scene.onBeforeRenderObservable.add(() => {
-                this.jumpManager.startJumpLoop({
-                    preJump: () => {
-                        this.cock.jump()
-                    },
-                    jumping: (position) => {
-                        this.cock.position = position
-                    },
-                    afterJump: () => {
-                        this.stairs.ascent()
-                        this.jumpManager.updateStartEnd({
-                            start: this.stairs.currFloorPos.position,
-                            end: this.stairs.nextFloorPos.position
-                        })
-                        this.jumpManager.updatePosX(this.posX)
-                        this.mainCamera.targetRefresh(this.stairs.currFloorPos.position)
-                    }
-                })
+                if(this.dead) {
+                    
+                } else {
+                    this.jumpManager.startJumpLoop({
+                        preJump: () => {
+                            this.cock.jump()
+                        },
+                        jumping: (position) => {
+                            this.cock.position = position
+                        },
+                        afterJump: () => {
+                            this.stairs.ascent()
+                            this.jumpManager.updateStartEnd({
+                                start: this.stairs.currFloorPos.position,
+                                end: this.stairs.nextFloorPos.position
+                            })
+                            this.jumpManager.updatePosX(this.posX)
+                            this.mainCamera.targetRefresh(this.stairs.currFloorPos.position)
+                            this.exposeHandler({ addPoint: true })
+                        }
+                    })
+                }
                 this.mainCamera.followLoop(this.jumpManager.avgSpeed)
                 this.stairs.rebuild()
                 this.barrierManager.disposeLoop(this.stairs.currFloorPos)
                 this.cock.collideLoop(barrier => {
+                    console.log('colliding')
                     this.dead = true
+
+                    this.exposeHandler({ isDead: true })
                 })
             })   
+        }
+    }
+    regExposeHandler(exposeHandler) {
+        if (typeof exposeHandler == 'function') {
+            this.exposeHandler = exposeHandler
         }
     }
 }

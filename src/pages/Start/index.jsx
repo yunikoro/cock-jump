@@ -1,6 +1,6 @@
 import React from 'react'
 import './start.less'
-import play from '../../assets/play.svg'
+import gamePad from '../../assets/game-pad.svg'
 
 
 export default class Index extends React.Component {
@@ -15,7 +15,7 @@ export default class Index extends React.Component {
             </div>
             <div className="btn-box">
                 <button onClick={this.props.playHandler} className="play-btn">
-                    <img src={play} /><span>玩一玩</span>
+                    <img src={gamePad} /><span>玩一玩</span>
                 </button>
             </div>
         </div>)

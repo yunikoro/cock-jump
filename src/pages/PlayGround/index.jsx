@@ -12,7 +12,9 @@ export default class PlayGround extends React.Component {
         this.canvasRef = React.createRef()
         this.game = null
         this.state = {
-            showStart: false
+            isStarting: false,
+            showStart: false,
+            points: 0,
         }
     }
     componentDidMount() {
@@ -24,6 +26,14 @@ export default class PlayGround extends React.Component {
                 canvas
             })
             await this.game.init()
+            this.game.regExposeHandler(({ isDead, addPoint }) => {
+                if (addPoint) {
+                    const points = this.state.points += 10
+                    this.setState({
+                        points
+                    })
+                }
+            })
             this.setState({
                 showStart: true
             })
@@ -33,17 +43,18 @@ export default class PlayGround extends React.Component {
     }
     start() {
         this.setState({
-            showStart: false
+            showStart: false,
+            isStarting: true
         })
         this.game.run()
     }
     render() {
         return (
             <div className="ground">
-                { this.state.showStart && 
+                { this.state.isStarting && 
                 <div className="point-box">
                     <img className="dec-base" src={decoL}></img>
-                    <div className="point">0</div>
+                    <div className="point">{this.state.points}</div>
                     <img className="dec-base" src={decoR}></img>
                 </div> }
                 { this.state.showStart &&
