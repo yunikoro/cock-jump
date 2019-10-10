@@ -100,6 +100,8 @@ export default class Game {
     }
     run() {
         this.panAxes = new PanAxesUpdater(this.canvas)
+        // wired collision bug fix
+        this.posX += 0.08
         this.panAxes.updater(glAxes => {
             // console.log(glAxes)
             this.cockAcce = glAxes
