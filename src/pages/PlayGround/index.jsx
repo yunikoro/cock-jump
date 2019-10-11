@@ -3,6 +3,7 @@ import './playground.less'
 
 import decoL from '../../assets/deco-l.svg'
 import decoR from '../../assets/deco-r.svg'
+import bar from '../../assets/bar.svg'
 
 import Game from '../../component/Game'
 
@@ -14,6 +15,7 @@ export default class PlayGround extends React.Component {
         this.state = {
             isStarting: false,
             showStart: false,
+            showReplay: false,
             points: 0,
         }
     }
@@ -33,6 +35,13 @@ export default class PlayGround extends React.Component {
                         points
                     })
                 }
+                if (isDead) {
+                    // console.log('show end')
+                    this.setState({
+                        isStarting: false,
+                        showReplay: true
+                    })
+                } 
             })
             this.setState({
                 showStart: true
@@ -51,6 +60,20 @@ export default class PlayGround extends React.Component {
     render() {
         return (
             <div className="ground">
+                {this.state.showReplay && <div className="end-modal-box">
+                    <div className="end-modal">
+                        <div>
+                            <div className="title">你的得分</div>
+                            <div className="score">{this.state.points}</div>
+                            <div>
+                                <img className="y-bar" src={bar} />
+                            </div>
+                        </div>
+                        <div className="replay-box">
+                            <button>再来一局</button>
+                        </div>
+                    </div>
+                </div>}
                 { this.state.isStarting && 
                 <div className="point-box">
                     <img className="dec-base" src={decoL}></img>

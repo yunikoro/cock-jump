@@ -146,7 +146,7 @@ export default class Game {
                 this.stairs.rebuild()
                 this.barrierManager.disposeLoop(this.stairs.currFloorPos)
                 this.cock.collideLoop(barrier => {
-                    console.log('colliding')
+                    // console.log('colliding')
                     this.dead = true
 
                     this.exposeHandler({ isDead: true })
