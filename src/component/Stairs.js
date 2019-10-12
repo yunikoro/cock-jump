@@ -9,6 +9,7 @@ export default class Stairs {
         this.game = game
          
         this.stairs = []
+        this.stairIdx = 0
          
         this.currFloorPos = {}
         this.nextFloorPos = {}
@@ -61,17 +62,38 @@ export default class Stairs {
         }
     }
     rebuild() {
-        this.stairs.forEach((floor, index) => {
-            if(floor.position.y - this.currFloorPos.position.y <= -6) {
-                this.topFloorPos.position.y += 2
-                this.topFloorPos.position.z += 3
-                floor.position = this.topFloorPos.position
-                this.topFloorPos = {
-                    position: floor.position.clone(),
-                    index
-                }
-                floor.loadBarrier()
+        const { length } = this.stairs
+        
+        const floor = this.stairs[this.stairIdx]
+
+        if(floor.position.y - this.currFloorPos.position.y <= -6) {
+            this.topFloorPos.position.y += 2
+            this.topFloorPos.position.z += 3
+            floor.position = this.topFloorPos.position
+            this.topFloorPos = {
+                position: floor.position.clone(),
+                index: this.stairIdx
             }
-        })
+            floor.loadBarrier()
+        }
+
+        if(this.stairIdx < length - 1) {
+            this.stairIdx++
+        } else {
+            this.stairIdx = 0
+        }
+
+        // this.stairs.forEach((floor, index) => {
+        //     if(floor.position.y - this.currFloorPos.position.y <= -6) {
+        //         this.topFloorPos.position.y += 2
+        //         this.topFloorPos.position.z += 3
+        //         floor.position = this.topFloorPos.position
+        //         this.topFloorPos = {
+        //             position: floor.position.clone(),
+        //             index
+        //         }
+        //         floor.loadBarrier()
+        //     }
+        // })
     }
 } 
