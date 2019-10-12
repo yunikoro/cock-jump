@@ -72,6 +72,7 @@ export default class Game {
             this.barrierManager = new BarrierManager('barrier_manager', {
                 game: this
             }, this.scene)
+            this.barrierManager.init()
 
             this.cock = new Cock('cock', {
                 game: this,
@@ -138,7 +139,7 @@ export default class Game {
                             })
                             this.jumpManager.updatePosX(this.posX)
                             this.mainCamera.targetRefresh(this.stairs.currFloorPos.position)
-                            this.exposeHandler({ addPoint: true })
+                            this.exposeHandler({ addPoint: true, fps: this.engine.getFps() })
                         }
                     })
                 }
@@ -153,6 +154,12 @@ export default class Game {
                 })
             })   
         }
+    }
+    reset() {
+        // this.mainCamera
+        // this.stairs
+        // this.cock
+        // this.jumpManager
     }
     regExposeHandler(exposeHandler) {
         if (typeof exposeHandler == 'function') {

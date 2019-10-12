@@ -17,6 +17,7 @@ export default class PlayGround extends React.Component {
             showStart: false,
             showReplay: false,
             points: 0,
+            fps: 0,
         }
     }
     componentDidMount() {
@@ -28,11 +29,12 @@ export default class PlayGround extends React.Component {
                 canvas
             })
             await this.game.init()
-            this.game.regExposeHandler(({ isDead, addPoint }) => {
+            this.game.regExposeHandler(({ isDead, addPoint, fps }) => {
                 if (addPoint) {
                     const points = this.state.points += 10
                     this.setState({
-                        points
+                        points,
+                        fps
                     })
                 }
                 if (isDead) {
@@ -78,6 +80,7 @@ export default class PlayGround extends React.Component {
                 <div className="point-box">
                     <img className="dec-base" src={decoL}></img>
                     <div className="point">{this.state.points}</div>
+                    <div className="point">{this.state.fps}</div>
                     <img className="dec-base" src={decoR}></img>
                 </div> }
                 { this.state.showStart &&

@@ -48,7 +48,7 @@ export default class Cock extends BABYLON.AbstractMesh {
         this.barrierManager.barrierList.forEach((barrier, index) => {
             const { tree } = barrier
             if (this.isCollidingWith(tree)) {
-                tree.dispose()
+                this.barrierManager.recycle(tree)
                 this.barrierManager.barrierList.splice(index, 1)
                 this.animation.stop()
                 this.dead()
