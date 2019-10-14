@@ -51,7 +51,7 @@ export default class BarrierManager {
         this.barrierList.forEach((barrier) => {
             const { tree } = barrier
             this.recycle(tree)
-            console.log(this.avaliBarrier.length)
+            // console.log(this.avaliBarrier.length)
         })
         this.barrierList = []
     }

@@ -21,6 +21,7 @@ export default class PlayGround extends React.Component {
         }
     }
     componentDidMount() {
+        console.log('mount')
         this.init(this.canvasRef.current)
     }
     async init(canvas) {
@@ -45,6 +46,7 @@ export default class PlayGround extends React.Component {
                     })
                 } 
             })
+            this.game.run()
             this.setState({
                 showStart: true
             })
@@ -57,7 +59,18 @@ export default class PlayGround extends React.Component {
             showStart: false,
             isStarting: true
         })
-        this.game.run()
+        this.game.started = true
+        this.game.emission()
+    }
+    reset() {
+        this.setState({
+            showReplay: false,
+        })
+        this.game.reset()
+        this.setState({
+            showStart: true,
+            isStarting: false
+        })
     }
     render() {
         return (
@@ -72,7 +85,7 @@ export default class PlayGround extends React.Component {
                             </div>
                         </div>
                         <div className="replay-box">
-                            <button>再来一局</button>
+                            <button onClick={this.reset.bind(this)}>再来一局</button>
                         </div>
                     </div>
                 </div>}
@@ -80,7 +93,6 @@ export default class PlayGround extends React.Component {
                 <div className="point-box">
                     <img className="dec-base" src={decoL}></img>
                     <div className="point">{this.state.points}</div>
-                    <div className="point">{this.state.fps}</div>
                     <img className="dec-base" src={decoR}></img>
                 </div> }
                 { this.state.showStart &&

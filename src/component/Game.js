@@ -40,7 +40,7 @@ export default class Game {
         this.cockAcce = new BABYLON.Vector2.Zero()
         this.posX = 0
         this.dead = false
-        this.started = true
+        this.started = false
 
         this.exposeHandler = () => {}
     }
@@ -72,7 +72,7 @@ export default class Game {
             this.barrierManager = new BarrierManager('barrier_manager', {
                 game: this
             }, this.scene)
-            this.barrierManager.init()
+            this.barrierManager.init(70)
 
             this.cock = new Cock('cock', {
                 game: this,
@@ -104,25 +104,31 @@ export default class Game {
         // wired collision bug fix
         this.posX += 0.08
         this.panAxes.updater(glAxes => {
-            // console.log(glAxes)
-            this.cockAcce = glAxes
-            if(!this.dead) {
-                if(this.posX > 5.7 || this.posX < -5.7) {
-                    if(this.posX > 0) {
-                        this.posX = 5.7
-                    } else {
-                        this.posX = -5.7
+            if(this.started) {
+                // console.log(glAxes)
+                this.cockAcce = glAxes
+                if(!this.dead) {
+                    if(this.posX > 5.7 || this.posX < -5.7) {
+                        if(this.posX > 0) {
+                            this.posX = 5.7
+                        } else {
+                            this.posX = -5.7
+                        }
                     }
+                    this.posX += this.cockAcce.x * 8
                 }
-                this.posX += this.cockAcce.x * 8
+                // this.cock.position.y += this.cockAcce.y * 8
+                this.jumpManager.updatePosX(this.posX)
             }
-            // this.cock.position.y += this.cockAcce.y * 8
-            this.jumpManager.updatePosX(this.posX)
         })
-        if(this.started) {
-            this.scene.onBeforeRenderObservable.add(() => {
+    }
+    emission() {
+        this.started = true
+        console.log(this.scene.onBeforeRenderObservable.hasObservers())
+        this.scene.onBeforeRenderObservable.add(() => {
+            if(this.started) {
                 if(this.dead) {
-                    
+                
                 } else {
                     this.jumpManager.startJumpLoop({
                         preJump: () => {
@@ -142,22 +148,32 @@ export default class Game {
                             this.exposeHandler({ addPoint: true, fps: this.engine.getFps() })
                         }
                     })
+                    this.mainCamera.followLoop(this.jumpManager.avgSpeed)
+                    this.stairs.rebuild()
+                    this.barrierManager.disposeLoop(this.stairs.currFloorPos)
                 }
-                this.mainCamera.followLoop(this.jumpManager.avgSpeed)
-                this.stairs.rebuild()
-                this.barrierManager.disposeLoop(this.stairs.currFloorPos)
                 this.cock.collideLoop(barrier => {
                     // console.log('colliding')
                     this.dead = true
-
+    
                     this.exposeHandler({ isDead: true })
                 })
-            })   
-        }
+            }
+        })
     }
     reset() {
-        // this.mainCamera
-        // this.stairs
+        this.scene.onBeforeRenderObservable.clear()
+        this.started = false
+        this.dead = false
+        this.mainCamera.reset()
+        this.cock.reset()
+        this.barrierManager.reset()
+        this.stairs.reset()
+        this.jumpManager.reset({
+            start: this.stairs.currFloorPos.position,
+            end: this.stairs.nextFloorPos.position,
+        })
+        this.mainCamera.targetRefresh(this.stairs.currFloorPos.position)
         // this.cock
         // this.jumpManager
     }
