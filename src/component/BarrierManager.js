@@ -28,6 +28,7 @@ export default class BarrierManager {
         this.avaliBarrier.push(tree)
     }
     plant(floorPos, axesX) {
+        // console.log(this.avaliBarrier.length)
         const tree = this.pick()
         tree.position.x = axesX
         tree.position.y = 2.0
@@ -45,5 +46,13 @@ export default class BarrierManager {
                 this.barrierList.splice(index, 1)
             }
         })
+    }
+    reset() {
+        this.barrierList.forEach((barrier) => {
+            const { tree } = barrier
+            this.recycle(tree)
+            console.log(this.avaliBarrier.length)
+        })
+        this.barrierList = []
     }
 }

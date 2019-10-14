@@ -63,7 +63,6 @@ export default class Stairs {
     }
     rebuild() {
         const { length } = this.stairs
-        
         const floor = this.stairs[this.stairIdx]
 
         if(floor.position.y - this.currFloorPos.position.y <= -6) {
@@ -82,18 +81,9 @@ export default class Stairs {
         } else {
             this.stairIdx = 0
         }
-
-        // this.stairs.forEach((floor, index) => {
-        //     if(floor.position.y - this.currFloorPos.position.y <= -6) {
-        //         this.topFloorPos.position.y += 2
-        //         this.topFloorPos.position.z += 3
-        //         floor.position = this.topFloorPos.position
-        //         this.topFloorPos = {
-        //             position: floor.position.clone(),
-        //             index
-        //         }
-        //         floor.loadBarrier()
-        //     }
-        // })
+    }
+    reset(stepNum = 20) {
+        this.stairs = []
+        this.init(stepNum)
     }
 } 

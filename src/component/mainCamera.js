@@ -26,4 +26,7 @@ export default class MainCamera extends BABYLON.ArcRotateCamera {
             this.target.z += avgSpeed.z
         }
     }
+    reset() {
+        this.target.set(0, 14.1, 0.3)
+    }
 } 
