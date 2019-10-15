@@ -102,6 +102,11 @@ export default class JumpCurveManager {
         _start.y += 2.1
         _end.y += 2.1
         this.start = _start
-        this.end = _end 
+        this.end = _end
+        this.center = BABYLON.Vector3.Center(this.start, this.end)
+        this.center.y += 10
+        this.loopIndex = 0
+
+        this.updateBase()
     }
 }

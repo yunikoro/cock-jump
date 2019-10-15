@@ -64,7 +64,9 @@ export default class PlayGround extends React.Component {
     }
     reset() {
         this.setState({
+            points: 0,
             showReplay: false,
+
         })
         this.game.reset()
         this.setState({
