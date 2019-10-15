@@ -18,7 +18,7 @@ module.exports = {
        index: resolve('./src/index.js'),
     },
     output: {
-        filename: '[name].[hash].js',
+        filename: 'static/[name].[hash].js',
         path: resolve('dist')
     },
     module: {
@@ -44,40 +44,13 @@ module.exports = {
                 'css-loader', 'postcss-loader', 'less-loader'
               ]
             },
-          //   {
-          //       test: /\.css$/,
-          //       use: [
-          //         'style-loader',
-          //         'css-loader'
-          //       ],
-          //   },
-          //   {
-          //     test: /\.less$/,
-          //     use: [
-          //       {
-          //         loader: "style-loader" 
-          //       },
-          //       {
-          //         loader: "css-loader" 
-          //       },
-          //       {
-          //         loader: "less-loader",
-          //         options: {
-          //           plugins: [
-          //             new CleanCSSPlugin({ advanced: true })
-          //           ]
-          //         }
-          //       }
-          //     ],
-
-          // },
             {
                 test: /\.(mp4|eot|svg|ttf|woff|woff2|json|png|jpeg|jpg|gltf|bin|babylon|fbx|glb)$/,
                 use: [
                   {
                     loader: 'file-loader',
                     options: {
-                      name: '[name].[ext]',
+                      name: 'static/[name].[hash].[ext]',
                     },
                   }
                 ]
@@ -103,8 +76,8 @@ module.exports = {
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
-          filename: devMode ? '[name].css' : '[name].[hash].css',
-          chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+          filename: devMode ? 'static/[name].css' : 'static/[name].[hash].css',
+          chunkFilename: devMode ? 'static/[id].css' : 'static/[id].[hash].css',
         }),
         new Px2remWebpackPlugin({
           originScreenWidth: 750,

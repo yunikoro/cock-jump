@@ -6,6 +6,9 @@ const base = require('./webpack.base.conf')
 
 module.exports = merge(base, {
     mode: 'production',
+    output: {
+        publicPath: './'
+    },
     optimization: {
         minimizer: [
             new UglifyJsPlugin({
@@ -17,9 +20,9 @@ module.exports = merge(base, {
             }),
             new OptimizeCSSAssetsPlugin({})
         ],
-        splitChunks: {
-            chunks: 'all'
-        }
+        // splitChunks: {
+        //     chunks: 'all'
+        // }
     },
     devtool: 'source-map'
 })
