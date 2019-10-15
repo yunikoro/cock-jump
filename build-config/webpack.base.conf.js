@@ -4,13 +4,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const Px2remWebpackPlugin = require('px2rem-webpack-plugin')
 const CleanCSSPlugin = require('less-plugin-clean-css')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
+const devMode = process.env.NODE_ENV !== 'production'
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
 module.exports = {
-    mode: 'development',
     context: path.resolve(__dirname, '../'),
     entry: {
        index: resolve('./src/index.js'),
@@ -31,32 +33,44 @@ module.exports = {
                 }
             },
             {
-                test: /\.css$/,
-                use: [
-                  'style-loader',
-                  'css-loader'
-                ],
-            },
-            {
-              test: /\.less$/,
+              test: /\.(le|c)ss$/,
               use: [
                 {
-                  loader: "style-loader" 
-                },
-                {
-                  loader: "css-loader" 
-                },
-                {
-                  loader: "less-loader",
+                  loader: MiniCssExtractPlugin.loader,
                   options: {
-                    plugins: [
-                      new CleanCSSPlugin({ advanced: true })
-                    ]
+                    hmr: devMode
                   }
-                }
-              ],
+                },
+                'css-loader', 'postcss-loader', 'less-loader'
+              ]
+            },
+          //   {
+          //       test: /\.css$/,
+          //       use: [
+          //         'style-loader',
+          //         'css-loader'
+          //       ],
+          //   },
+          //   {
+          //     test: /\.less$/,
+          //     use: [
+          //       {
+          //         loader: "style-loader" 
+          //       },
+          //       {
+          //         loader: "css-loader" 
+          //       },
+          //       {
+          //         loader: "less-loader",
+          //         options: {
+          //           plugins: [
+          //             new CleanCSSPlugin({ advanced: true })
+          //           ]
+          //         }
+          //       }
+          //     ],
 
-          },
+          // },
             {
                 test: /\.(mp4|eot|svg|ttf|woff|woff2|json|png|jpeg|jpg|gltf|bin|babylon|fbx|glb)$/,
                 use: [
@@ -80,11 +94,17 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-          title: 'Cock Jump',
+          title: '疯狂跳跳鸡',
           filename: 'index.html',
           template: 'index.html',
           chunks: ['index'],
           inject: true
+        }),
+        new MiniCssExtractPlugin({
+          // Options similar to the same options in webpackOptions.output
+          // both options are optional
+          filename: devMode ? '[name].css' : '[name].[hash].css',
+          chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
         }),
         new Px2remWebpackPlugin({
           originScreenWidth: 750,
