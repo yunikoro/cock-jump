@@ -21,6 +21,11 @@ module.exports = {
         filename: 'static/[name].[hash].js',
         path: resolve('dist')
     },
+    resolve: {
+      alias: {
+        static: path.resolve(__dirname, 'src/assets'),
+      }
+    },
     module: {
         rules: [
             {
@@ -38,7 +43,14 @@ module.exports = {
                 {
                   loader: MiniCssExtractPlugin.loader,
                   options: {
-                    hmr: devMode
+                    hmr: devMode,
+                    publicPath: (resourcePath, context) => {
+                      // publicPath is the relative path of the resource to the context
+                      // e.g. for ./css/admin/main.css the publicPath will be ../../
+                      // while for ./css/main.css the publicPath will be ../
+                      // console.log(resourcePath)
+                      return '../'
+                    },
                   }
                 },
                 'css-loader', 'postcss-loader', 'less-loader'
@@ -50,7 +62,7 @@ module.exports = {
                   {
                     loader: 'file-loader',
                     options: {
-                      name: 'static/[name].[hash].[ext]',
+                      name: './static/[name].[hash].[ext]',
                     },
                   }
                 ]
@@ -76,8 +88,8 @@ module.exports = {
         new MiniCssExtractPlugin({
           // Options similar to the same options in webpackOptions.output
           // both options are optional
-          filename: devMode ? 'static/[name].css' : 'static/[name].[hash].css',
-          chunkFilename: devMode ? 'static/[id].css' : 'static/[id].[hash].css',
+          filename: devMode ? './static/[name].css' : './static/[name].[hash].css',
+          chunkFilename: devMode ? './static/[id].css' : './static/[id].[hash].css',
         }),
         new Px2remWebpackPlugin({
           originScreenWidth: 750,

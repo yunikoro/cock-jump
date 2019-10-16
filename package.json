@@ -37,6 +37,7 @@
     "mini-css-extract-plugin": "^0.8.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss-loader": "^3.0.0",
+    "postcss-url": "^8.0.0",
     "px2rem-webpack-plugin": "^0.2.3",
     "style-loader": "^1.0.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
