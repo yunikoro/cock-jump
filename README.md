@@ -1,6 +1,6 @@
 # Crazy Jumping Cock 疯狂跳跳鸡
 ## Product ScreenShot
-
+![cock jump](https://raw.githubusercontent.com/yunikoro/cock-jump/master/cock.png)
 ## Tools and FrameWorks using 框架选型
 ### 1. Babylonjs
 ### 2. React
