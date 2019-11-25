@@ -1,0 +1,99 @@
+.ground {
+    height: 100vh;
+    .end-modal-box {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        z-index: 2;
+        position: absolute;
+        width: 100%;
+        .end-modal {
+            margin-top: 250px;
+            background-color: #FFFFFF;
+            padding: 30px 60px;
+            border: 5px solid #5A2421;
+            border-radius: 15px;
+            .title {
+                display: flex;
+                justify-content: center;
+                font-family: "ali-light";
+                font-size: 48px;
+                color: #BB785B;
+            }
+            .score {
+                margin-top: 30px;
+                display: flex;
+                justify-content: center;
+                font-family: "ali-blod";
+                font-size: 87px;
+                color: #C34722;
+            }
+            .y-bar {
+                width: 300px;
+            }
+            .replay-box {
+                margin-top: 45px;
+                display: flex;
+                justify-content: center;
+                button {
+                    background-color: #E9445C;
+                    color: #FFFFFF;
+                    outline: none;
+                    border: 0;
+                    border-radius: 50px;
+                    font-size: 34px;
+                    padding: 20px 60px;
+                    &:active {
+                        background-color: #e9445cad;
+                    }
+                }
+            }
+        }
+    }
+    .point-box {
+        margin-top: 25px;
+        position: absolute;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        .dec-base {
+            padding-top: 35px;
+            height: 30px;
+        }
+        .point {
+            margin: 15px 45px 0 45px;
+            font-family: "ali-light";
+            font-size: 88px;
+            color: #FFFFFF;
+        }
+    }
+    .btn-box {
+        display: flex;
+        justify-content: center;
+        z-index: 2;
+        position: absolute;
+        margin-top: 45vh;
+        width: 100%;
+        .start {
+           outline: none;
+           background-color: #4477F2;
+           border: 0;
+           border-radius: 60px;
+           padding: 10px 90px;
+           color: #FFFFFF;
+           font-size: 32px;
+           &:active {
+            transform: translate(3px, 3px); /* no */
+            background-color: #4744f2;
+           }
+        }
+    }
+}
+.view {
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+}

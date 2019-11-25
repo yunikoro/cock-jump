@@ -57,4 +57,10 @@ export default class PanAxesUpdater {
             cb(acce)
         })
     }
+    destory() {
+        this.currRateAxes = new BABYLON.Vector2.Zero()
+        this.cssAxes = new BABYLON.Vector2.Zero()
+        this.cssRateAxes = new BABYLON.Vector2.Zero()
+        this.hammer.destroy()
+    }
 } 

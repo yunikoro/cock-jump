@@ -41,6 +41,11 @@ export default class Game {
         this.posX = 0
         this.dead = false
         this.started = false
+
+        this.exposeHandler = () => {}
+    }
+    static get EDAG() {
+        return 5
     }
     async init() {
         this.mainCamera = new MainCamera(this.scene)
@@ -67,6 +72,7 @@ export default class Game {
             this.barrierManager = new BarrierManager('barrier_manager', {
                 game: this
             }, this.scene)
+            this.barrierManager.init(70)
 
             this.cock = new Cock('cock', {
                 game: this,
@@ -86,21 +92,60 @@ export default class Game {
                     end: this.stairs.nextFloorPos.position,
                     game: this
                 })
+            this.engine.runRenderLoop(() => {
+                this.scene.render()
+            })
         } catch (e) {
             throw e
         }
     }
     run() {
         this.panAxes = new PanAxesUpdater(this.canvas)
+        // wired collision bug fix
+        this.posX += 0.08
         this.panAxes.updater(glAxes => {
-            // console.log(glAxes)
-            this.cockAcce = glAxes
-            this.posX += this.cockAcce.x * 8
-            // this.cock.position.y += this.cockAcce.y * 8
-            this.jumpManager.updatePosX(this.posX)
+            if(this.started) {
+                // console.log(glAxes)
+                this.cockAcce = glAxes
+                if(!this.dead) {
+                    if(this.posX > 5.7 || this.posX < -5.7) {
+                        if(this.posX > 0) {
+                            this.posX = 5.7
+                        } else {
+                            this.posX = -5.7
+                        }
+                    }
+                    this.posX += this.cockAcce.x * 8
+                }
+                // this.cock.position.y += this.cockAcce.y * 8
+                this.jumpManager.updatePosX(this.posX)
+            }
         })
+    }
+    emission() {
+        this.started = true
+        this.scene.beforeRender = this.renderLoopHandler.bind(this)    
+    }
+    reset() {
+        this.started = false
+        this.dead = false
+        this.mainCamera.reset()
+        this.cock.reset()
+        this.barrierManager.reset()
+        this.stairs.reset()
+        this.jumpManager.reset({
+            start: this.stairs.currFloorPos.position,
+            end: this.stairs.nextFloorPos.position,
+        })
+        this.mainCamera.targetRefresh(this.stairs.currFloorPos.position)
+        // this.cock
+        // this.jumpManager
+    }
+    renderLoopHandler() {
         if(this.started) {
-            this.scene.onBeforeRenderObservable.add(() => {
+            if(this.dead) {
+            
+            } else {
                 this.jumpManager.startJumpLoop({
                     preJump: () => {
                         this.cock.jump()
@@ -116,18 +161,26 @@ export default class Game {
                         })
                         this.jumpManager.updatePosX(this.posX)
                         this.mainCamera.targetRefresh(this.stairs.currFloorPos.position)
+                        this.exposeHandler({ addPoint: true, fps: this.engine.getFps() })
                     }
                 })
                 this.mainCamera.followLoop(this.jumpManager.avgSpeed)
                 this.stairs.rebuild()
                 this.barrierManager.disposeLoop(this.stairs.currFloorPos)
-                this.cock.collideLoop(barrier => {
-                    this.dead = true
-                })
-            })   
+            }
+            this.cock.collideLoop(barrier => {
+                // console.log('colliding')
+                this.dead = true
+                this.scene.beforeRender = null
+                setTimeout(() => {
+                    this.exposeHandler({ isDead: true })
+                }, 600)
+            })
         }
-        this.engine.runRenderLoop(() => {
-            this.scene.render()
-        })
+    }
+    regExposeHandler(exposeHandler) {
+        if (typeof exposeHandler == 'function') {
+            this.exposeHandler = exposeHandler
+        }
     }
 }

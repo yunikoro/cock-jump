@@ -1,0 +1,20 @@
+/* body {
+    height: 100vh;
+    display: flex;
+    background-color: rgb(209, 209, 209);
+    margin: 0;
+}
+.view {
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+} */
+@font-face {
+    font-family: "ali-light";
+    src: url("../assets/Alibaba-PuHuiTi-Light.ttf") format("truetype");
+}
+@font-face {
+    font-family: "ali-bold";
+    src: url("../assets/Alibaba-PuHuiTi-Bold.ttf") format("truetype");
+}

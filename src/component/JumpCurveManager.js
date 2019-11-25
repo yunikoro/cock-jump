@@ -26,8 +26,8 @@ export default class JumpCurveManager {
                             .divide(new BABYLON.Vector3(this.pointNum,
                                                         this.pointNum, 
                                                         this.pointNum))
-        console.log(this.end
-            .subtract(this.start).length())
+        // console.log(this.end
+        //     .subtract(this.start).length())
         this.updateBase()
     }
     updateBase () {
@@ -95,5 +95,18 @@ export default class JumpCurveManager {
                             .divide(new BABYLON.Vector3(this.pointNum,
                                                         this.pointNum, 
                                                         this.pointNum))
+    }
+    reset({ start, end }) {
+        const _start = start.clone()
+        const _end = end.clone()
+        _start.y += 2.1
+        _end.y += 2.1
+        this.start = _start
+        this.end = _end
+        this.center = BABYLON.Vector3.Center(this.start, this.end)
+        this.center.y += 10
+        this.loopIndex = 0
+
+        this.updateBase()
     }
 }

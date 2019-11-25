@@ -14,6 +14,10 @@ export default class Cock extends BABYLON.AbstractMesh {
         })
         this.setEnabled(false)
     }
+    reset() {
+        this.position.set(0, 2.1, 0)
+        this.animation.start(false, 0.5, 6.25 * 1/150,  6.25 * 2/150)
+    }
     init() {
         this.rotation.y = - Math.PI / 2
         this.setEnabled(true)
@@ -48,7 +52,10 @@ export default class Cock extends BABYLON.AbstractMesh {
         this.barrierManager.barrierList.forEach((barrier, index) => {
             const { tree } = barrier
             if (this.isCollidingWith(tree)) {
-                console.log('colliding')
+                this.barrierManager.recycle(tree)
+                this.barrierManager.barrierList.splice(index, 1)
+                this.animation.stop()
+                this.dead()
                 cb(barrier)
             }
         })

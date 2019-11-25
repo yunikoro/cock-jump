@@ -1,21 +1,29 @@
  
-import Game from './component/Game'
-import './style.css';
-import VConsole from 'vconsole';
+import ReactDOM from 'react-dom'
+import React from 'react'
 
-const canvas = document.querySelector('#c')
+import Game from './component/Game'
+import './style/style.css'
+import VConsole from 'vconsole'
+
+import Index from './pages/Index.jsx'
+
+// const canvas = document.querySelector('#c')
+const body = document.querySelector('#root')
 // new VConsole()
 
-const game = new Game({
-    canvas
-})
-const main = async () => {
-    try {
-        await game.init()
-        game.run()
-    } catch (e) {
-        throw e
-    }
+// const game = new Game({
+//     canvas
+// })
+// const main = async () => {
+//     try {
+//         await game.init()
+//         game.run()
+//     } catch (e) {
+//         throw e  
+//     }
     
-}
-main()
+// }
+// main()
+
+ReactDOM.render(<Index />, body)

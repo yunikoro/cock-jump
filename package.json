@@ -1,11 +1,11 @@
 {
-  "name": "cock-kump",
+  "name": "cock-jump",
   "version": "1.0.0",
   "description": "a html5 game cock jump game",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build-config/webpack.base.conf.js",
-    "build": "npx webpack --config build-config/webpack.base.conf.js"
+    "build:prod": "npx webpack --config build-config/webpack.prod.conf.js"
   },
   "repository": {
     "type": "git",
@@ -23,15 +23,28 @@
     "@babel/core": "^7.5.5",
     "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.6.5",
     "babel-loader": "^8.0.6",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
+    "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^4.1.0",
     "html-webpack-plugin": "^3.2.0",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "less-plugin-clean-css": "^1.5.1",
+    "mini-css-extract-plugin": "^0.8.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-loader": "^3.0.0",
+    "postcss-url": "^8.0.0",
+    "px2rem-webpack-plugin": "^0.2.3",
     "style-loader": "^1.0.0",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-dev-server": "^3.7.2",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "@babel/runtime": "^7.5.5",
@@ -39,6 +52,8 @@
     "babylonjs-gui": "^4.0.3",
     "babylonjs-loaders": "^4.0.3",
     "hammerjs": "^2.0.8",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
     "vconsole": "^3.3.4"
   }
 }
